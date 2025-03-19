@@ -1,0 +1,121 @@
+<!DOCTYPE html> 
+<html lang="en">   
+<head>     
+    <meta charset="UTF-8" />     
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />     
+    <link 
+      rel="stylesheet" 
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" 
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" 
+      crossorigin="anonymous" 
+      referrerpolicy="no-referrer" 
+    />     
+    <title>Scientific Calculator</title>     
+    <link rel="stylesheet" href="styles.css" />   
+</head>   
+<body>     
+    <!-- Calculator Container -->
+    <div class="calculator">       
+        
+        <!-- History Section -->
+        <div class="history-section">         
+            <button class="history-toggle-btn" id="history-btn">           
+                <i class="fa-solid fa-clock-rotate-left"></i> Show History         
+            </button>         
+            <div id="history-container" class="history-container" style="display: none"></div>       
+        </div>        
+        
+        <!-- Display Screen -->
+        <input type="text" id="display" class="calculator-display" placeholder="0" readonly />        
+        
+        <!-- Calculator Options -->
+        <div class="calculator-options">         
+            <button id="deg-btn" class="toggle-btn">DEG</button>         
+            <button class="toggle-btn"><span class="bold-text">F-E</span></button>         
+            
+            <!-- Memory Buttons -->
+            <button class="memory-btn">MC</button>         
+            <button class="memory-btn">MR</button>         
+            <button class="memory-btn">M+</button>         
+            <button class="memory-btn">M-</button>         
+            <button class="memory-btn">MS</button>         
+            
+            <!-- Trigonometry Dropdown Menu -->
+            <button class="dropdown-btn">           
+                <img src="/assets/ruler.svg" alt="ruler" class="dropdown-icon" />           
+                <span>Trigonometry</span>           
+                <img src="/assets/dd.svg" class="dropdown-arrow" />           
+                <div class="dropdown-menu">             
+                    <a href="#" data-func="sin">sin</a>             
+                    <a href="#" data-func="cos">cos</a>             
+                    <a href="#" data-func="tan">tan</a>           
+                </div>         
+            </button>         
+            
+            <!-- Function Dropdown Menu -->
+            <button class="dropdown-btn1">           
+                <img src="/assets/function.svg" alt="function symbol" class="dropdown-icon1" />           
+                <span>Function</span>           
+                <img src="/assets/dd.svg" class="dropdown-arrow1" />           
+                <div class="dropdown-menu">             
+                    <a href="#" data-func="floor">floor</a>             
+                    <a href="#" data-func="ceil">ceil</a>           
+                </div>         
+            </button>       
+        </div>        
+        
+        <!-- Calculator Buttons Grid -->
+        <div class="calculator-buttons">         
+           
+            <button class="calc-btn" data-value="2nd">2nd</button>         
+            <button class="calc-btn" data-value="π">π</button>         
+            <button class="calc-btn" data-value="e">e</button>         
+            <button class="calc-btn clear-btn" data-value="C">C</button>         
+            <button class="calc-btn backspace-btn" id="backspace">           
+                <img src="/assets/backspace.svg" alt="backspace" />         
+            </button>         
+            
+         
+            <button class="calc-btn" data-value="x²">x²</button>         
+            <button class="calc-btn" data-value="1/x">1/x</button>         
+            <button class="calc-btn" data-value="|x|">|x|</button>         
+            <button class="calc-btn" data-value="exp">exp</button>         
+            <button class="calc-btn" data-value="mod">mod</button>          
+            
+            <button class="calc-btn" data-value="√">√</button>         
+            <button class="calc-btn" data-value="(">(</button>         
+            <button class="calc-btn" data-value=")">)</button>         
+            <button class="calc-btn" data-value="n!">n!</button>         
+            <button class="calc-btn operator-btn" data-value="/">÷</button>          
+            
+           
+            <button class="calc-btn" data-value="^">xʸ</button>         
+            <button class="calc-btn number-btn" data-value="7">7</button>         
+            <button class="calc-btn number-btn" data-value="8">8</button>         
+            <button class="calc-btn number-btn" data-value="9">9</button>         
+            <button class="calc-btn operator-btn" data-value="*">×</button>          
+            
+            <button class="calc-btn" data-value="10^x">10ˣ</button>         
+            <button class="calc-btn number-btn" data-value="4">4</button>         
+            <button class="calc-btn number-btn" data-value="5">5</button>         
+            <button class="calc-btn number-btn" data-value="6">6</button>         
+            <button class="calc-btn operator-btn" data-value="-">-</button>          
+            
+            <button class="calc-btn" data-value="log">log</button>         
+            <button class="calc-btn number-btn" data-value="1">1</button>         
+            <button class="calc-btn number-btn" data-value="2">2</button>         
+            <button class="calc-btn number-btn" data-value="3">3</button>         
+            <button class="calc-btn operator-btn" data-value="+">+</button>          
+            
+            <button class="calc-btn" data-value="ln">ln</button>         
+            <button class="calc-btn" data-value="+/-">+/-</button>         
+            <button class="calc-btn number-btn" data-value="0">0</button>         
+            <button class="calc-btn" data-value=".">.</button>         
+            <button class="calc-btn equal-btn" id="equal">=</button>       
+        </div>     
+    </div>      
+    
+    <!-- Link to JavaScript file -->
+    <script src="script.js"></script>   
+</body> 
+</html>
