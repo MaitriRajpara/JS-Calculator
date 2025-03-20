@@ -114,14 +114,16 @@ export const Operation = (function () {
         this.appendValue('%');
     };
 
+    // Adds an exponentiation operator (^) to the screen
     Operation.prototype.exponent = function () {
         this.appendValue('^');
     };
 
+    // Computes the factorial of the displayed number
     Operation.prototype.factorial = function () {
         const num = parseInt(this.screen.textContent, 10);
         if (isNaN(num) || num < 0) {
-            this.screen.textContent = 'Error';
+            this.screen.textContent = 'Error'; // Factorial is only defined for non-negative integers
         } else {
             let fact = 1;
             for (let i = 2; i <= num; i++) {
@@ -131,15 +133,17 @@ export const Operation = (function () {
         }
     };
 
+    // Computes the base-10 logarithm of the displayed number
     Operation.prototype.log = function () {
         const num = parseFloat(this.screen.textContent);
         if (isNaN(num) || num <= 0) {
-            this.screen.textContent = 'Error';
+            this.screen.textContent = 'Error'; // Logarithm is undefined for non-positive numbers
         } else {
             this.screen.textContent = Math.log10(num);
         }
     };
 
+    // Computes Euler’s number (e) raised to the power of the displayed number
     Operation.prototype.eulersFormula = function () {
         const x = parseFloat(this.screen.textContent);
         if (isNaN(x)) {
@@ -149,24 +153,27 @@ export const Operation = (function () {
         }
     };
 
+    // Computes the reciprocal (1/x) of the displayed number
     Operation.prototype.reciprocal = function () {
         const x = parseFloat(this.screen.textContent);
         if (isNaN(x) || x === 0) {
-            this.screen.textContent = 'Error';
+            this.screen.textContent = 'Error'; // Division by zero is undefined
         } else {
             this.screen.textContent = (1 / x);
         }
     };
 
+    // Computes the natural logarithm (ln) of the displayed number
     Operation.prototype.ln = function () {
         const x = parseFloat(this.screen.textContent);
         if (isNaN(x) || x <= 0) {
-            this.screen.textContent = 'Error';
+            this.screen.textContent = 'Error'; // ln(x) is undefined for non-positive numbers
         } else {
             this.screen.textContent = Math.log(x);
         }
     };
 
+    // Computes the absolute value of the displayed number
     Operation.prototype.absoluteValue = function () {
         const x = parseFloat(this.screen.textContent);
         if (isNaN(x)) {
@@ -176,6 +183,7 @@ export const Operation = (function () {
         }
     };
 
+    // Squares the displayed number
     Operation.prototype.square = function () {
         const num = parseFloat(this.screen.textContent);
         if (isNaN(num)) {
@@ -185,19 +193,21 @@ export const Operation = (function () {
         }
     };
 
+    // Computes the square root of the displayed number
     Operation.prototype.sqrt = function () {
         const x = parseFloat(this.screen.textContent);
         if (isNaN(x) || x < 0) {
-            this.screen.textContent = 'Error';
+            this.screen.textContent = 'Error'; // Square root is undefined for negative numbers
         } else {
             this.screen.textContent = Math.sqrt(x);
         }
     };
 
+    // Computes the power of a number in the format "x^y"
     Operation.prototype.powerofXY = function () {
         const expression = this.screen.textContent.split('^');
         if (expression.length !== 2) {
-            this.screen.textContent = 'Error';
+            this.screen.textContent = 'Error'; // Ensures proper input format
             return;
         }
 
@@ -211,13 +221,14 @@ export const Operation = (function () {
         }
     };
 
-
+    // Inserts the exponentiation symbol (^) if not already present
     Operation.prototype.power = function () {
         if (!this.screen.textContent.includes('^')) {
             this.appendValue('^');
         }
     };
 
+    // Computes 10 raised to the power of the displayed number
     Operation.prototype.tenPowerX = function () {
         const value = parseFloat(this.screen.textContent);
         if (!isNaN(value)) {
@@ -227,6 +238,7 @@ export const Operation = (function () {
         }
     };
 
+    // Changes the sign of the displayed number (positive to negative or vice versa)
     Operation.prototype.changeSign = function () {
         const currentValue = parseFloat(this.screen.textContent);
         if (!isNaN(currentValue)) {
@@ -234,26 +246,30 @@ export const Operation = (function () {
         }
     };
 
+    // Toggles between degrees and radians mode for trigonometric functions
     Operation.prototype.setDegMode = function () {
         this.isDegreeMode = !this.isDegreeMode;
         console.log("Degree mode set to:", this.isDegreeMode);
         this.updateDegButton();
-    }
+    };
 
+    // Updates the display button text to indicate DEG or RAD mode
     Operation.prototype.updateDegButton = function () {
         const degButton = document.getElementById("deg-btn");
         if (degButton) {
             degButton.innerText = this.isDegreeMode ? "DEG" : "RAD";
         }
-    }
+    };
 
+    // Computes trigonometric functions (sin, cos, tan) based on the current mode (degrees or radians)
     Operation.prototype.trigometry = function (func) {
         let inputValue = parseFloat(this.screen.textContent);
         if (isNaN(inputValue)) {
             this.screen.textContent = "Error";
             return;
         }
-        let angle = this.isDegreeMode ? (inputValue * Math.PI) / 180 : inputValue;
+
+        let angle = this.isDegreeMode ? (inputValue * Math.PI) / 180 : inputValue; // Convert degrees to radians if needed
         let result;
 
         switch (func) {
@@ -272,12 +288,15 @@ export const Operation = (function () {
         }
 
         this.screen.textContent = result;
+
+        // Saves calculation in history
         const trigExpression = `${func}(${inputValue}${this.isDegreeMode ? '°' : ' rad'}) = ${result}`;
         saveHistory(trigExpression);
 
         console.log(`Trig function: ${func}, Input: ${inputValue}, Mode: ${this.isDegreeMode ? 'Degrees' : 'Radians'}, Result: ${result}`);
     };
 
+    // Converts number into exponential notation (scientific format)
     Operation.prototype.FEMode = function () {
         let inputStr = this.screen.textContent;
         if (!inputStr || isNaN(Number(inputStr))) return;
@@ -296,17 +315,17 @@ export const Operation = (function () {
         }
     };
 
+    // Rounds the displayed number down to the nearest integer
     Operation.prototype.floor = function () {
         let value = parseFloat(this.screen.textContent);
-
         if (!isNaN(value)) {
             this.screen.textContent = Math.floor(value);
-
         } else {
             this.screen.textContent = "Error";
         }
-    }
+    };
 
+    // Rounds the displayed number up to the nearest integer
     Operation.prototype.ceil = function () {
         let value = parseFloat(this.screen.textContent);
         if (!isNaN(value)) {
@@ -314,7 +333,8 @@ export const Operation = (function () {
         } else {
             this.screen.textContent = "Error";
         }
-    }
+    };
+
 
     return Operation;
 })();
