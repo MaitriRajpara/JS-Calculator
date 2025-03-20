@@ -1,121 +1,129 @@
-<!DOCTYPE html> 
-<html lang="en">   
-<head>     
-    <meta charset="UTF-8" />     
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />     
-    <link 
-      rel="stylesheet" 
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" 
-      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" 
-      crossorigin="anonymous" 
-      referrerpolicy="no-referrer" 
-    />     
-    <title>Scientific Calculator</title>     
-    <link rel="stylesheet" href="styles.css" />   
-</head>   
-<body>     
-    <!-- Calculator Container -->
-    <div class="calculator">       
-        
-        <!-- History Section -->
-        <div class="history-section">         
-            <button class="history-toggle-btn" id="history-btn">           
-                <i class="fa-solid fa-clock-rotate-left"></i> Show History         
-            </button>         
-            <div id="history-container" class="history-container" style="display: none"></div>       
-        </div>        
-        
-        <!-- Display Screen -->
-        <input type="text" id="display" class="calculator-display" placeholder="0" readonly />        
-        
-        <!-- Calculator Options -->
-        <div class="calculator-options">         
-            <button id="deg-btn" class="toggle-btn">DEG</button>         
-            <button class="toggle-btn"><span class="bold-text">F-E</span></button>         
-            
-            <!-- Memory Buttons -->
-            <button class="memory-btn">MC</button>         
-            <button class="memory-btn">MR</button>         
-            <button class="memory-btn">M+</button>         
-            <button class="memory-btn">M-</button>         
-            <button class="memory-btn">MS</button>         
-            
-            <!-- Trigonometry Dropdown Menu -->
-            <button class="dropdown-btn">           
-                <img src="/assets/ruler.svg" alt="ruler" class="dropdown-icon" />           
-                <span>Trigonometry</span>           
-                <img src="/assets/dd.svg" class="dropdown-arrow" />           
-                <div class="dropdown-menu">             
-                    <a href="#" data-func="sin">sin</a>             
-                    <a href="#" data-func="cos">cos</a>             
-                    <a href="#" data-func="tan">tan</a>           
-                </div>         
-            </button>         
-            
-            <!-- Function Dropdown Menu -->
-            <button class="dropdown-btn1">           
-                <img src="/assets/function.svg" alt="function symbol" class="dropdown-icon1" />           
-                <span>Function</span>           
-                <img src="/assets/dd.svg" class="dropdown-arrow1" />           
-                <div class="dropdown-menu">             
-                    <a href="#" data-func="floor">floor</a>             
-                    <a href="#" data-func="ceil">ceil</a>           
-                </div>         
-            </button>       
-        </div>        
-        
-        <!-- Calculator Buttons Grid -->
-        <div class="calculator-buttons">         
-           
-            <button class="calc-btn" data-value="2nd">2nd</button>         
-            <button class="calc-btn" data-value="π">π</button>         
-            <button class="calc-btn" data-value="e">e</button>         
-            <button class="calc-btn clear-btn" data-value="C">C</button>         
-            <button class="calc-btn backspace-btn" id="backspace">           
-                <img src="/assets/backspace.svg" alt="backspace" />         
-            </button>         
-            
-         
-            <button class="calc-btn" data-value="x²">x²</button>         
-            <button class="calc-btn" data-value="1/x">1/x</button>         
-            <button class="calc-btn" data-value="|x|">|x|</button>         
-            <button class="calc-btn" data-value="exp">exp</button>         
-            <button class="calc-btn" data-value="mod">mod</button>          
-            
-            <button class="calc-btn" data-value="√">√</button>         
-            <button class="calc-btn" data-value="(">(</button>         
-            <button class="calc-btn" data-value=")">)</button>         
-            <button class="calc-btn" data-value="n!">n!</button>         
-            <button class="calc-btn operator-btn" data-value="/">÷</button>          
-            
-           
-            <button class="calc-btn" data-value="^">xʸ</button>         
-            <button class="calc-btn number-btn" data-value="7">7</button>         
-            <button class="calc-btn number-btn" data-value="8">8</button>         
-            <button class="calc-btn number-btn" data-value="9">9</button>         
-            <button class="calc-btn operator-btn" data-value="*">×</button>          
-            
-            <button class="calc-btn" data-value="10^x">10ˣ</button>         
-            <button class="calc-btn number-btn" data-value="4">4</button>         
-            <button class="calc-btn number-btn" data-value="5">5</button>         
-            <button class="calc-btn number-btn" data-value="6">6</button>         
-            <button class="calc-btn operator-btn" data-value="-">-</button>          
-            
-            <button class="calc-btn" data-value="log">log</button>         
-            <button class="calc-btn number-btn" data-value="1">1</button>         
-            <button class="calc-btn number-btn" data-value="2">2</button>         
-            <button class="calc-btn number-btn" data-value="3">3</button>         
-            <button class="calc-btn operator-btn" data-value="+">+</button>          
-            
-            <button class="calc-btn" data-value="ln">ln</button>         
-            <button class="calc-btn" data-value="+/-">+/-</button>         
-            <button class="calc-btn number-btn" data-value="0">0</button>         
-            <button class="calc-btn" data-value=".">.</button>         
-            <button class="calc-btn equal-btn" id="equal">=</button>       
-        </div>     
-    </div>      
-    
-    <!-- Link to JavaScript file -->
-    <script src="script.js"></script>   
-</body> 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scientific Calculator</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="./assets/calculator.svg">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- Button to Show History -->
+    <button id="toggleHistoryButton"><i class="fa fa-history"></i></button>
+
+    <!-- History Container (Initially Hidden) -->
+    <div id="historyContainer" class="history-container">
+      <div id="historyList">
+        <ul>
+
+        </li>
+      </div>
+    </div>
+    <!-- Display Screen -->
+    <div class="display">
+      <span id="screen">0</span>
+    </div>
+    <div class="btns">
+      <div class="function-row">
+        <!-- Memory and History buttons -->
+        <div class="degree-row">
+          <button class="d-btn" aria-label="Degree Mode" id="deg-btn"><span class="bold-text">DEG</span></button>
+          <button class="d-btn fe-btn" aria-label=""><span class="bold-text">F-E</span></button>
+          <button class="clear-history-btn"><i class="fa fa-trash" aria-hidden="true"></i></button>
+        </div>
+
+        <!-- Memory buttons -->
+        <button class="memory m-color mc-btn" aria-label="Memory Clear">MC</button>
+        <button class="memory m-color mr-btn">MR</button>
+        <button class="memory mplus-btn" aria-label="Memory Add"><span class="bold-text">M+</span></button>
+        <button class="memory mminus-btn" aria-label="Memory Subtract"><span class="bold-text">M-</span></button>
+        <button class="memory ms-btn" aria-label="Memory Store"><span class="bold-text">MS</span></button>
+
+        <div class="f-div">
+          <button class="f-btn" aria-label="Trigonometry Functions">
+            <img src="./assets/ruler.svg" alt="ruler" id="ruler-img" />
+            <span>Trigonometry</span>
+            <img src="./assets/dd.svg" class="drop-down">
+            <div class="dropdown-content">
+              <a href="#" class="sin-btn">sin</a>
+              <a href="#" class="cos-btn">cos</a>
+              <a href="#" class="tan-btn">tan</a>
+            </div>
+          </button>
+        </div>
+
+        <div class="f-div1">
+          <button class="f-btn1" aria-label="Function List">
+            <img src="./assets/function.svg" alt="function symbol" id="function-img" class="function-img" />
+            <span>Function</span>
+            <img src="./assets/dd.svg" class="drop-down">
+            <div class="dropdown-content">
+              <a href="#" class="floor-btn">floor</a>
+              <a href="#" class="ceil-btn">ceil</a>
+            </div>
+          </button>
+        </div>
+
+      </div>
+      <div class="buttons">
+        <button>2<sup>nd</sup></button>
+        <button class="pi-btn">π</button>
+        <button class="eulars-btn">e</button>
+        <button class="clear-btn" id="clear">C</button>
+        <button><img src="./assets/backspace.svg" alt="backspace" id="backspace"></button>
+
+        <button class="square-btn">x<sup>2</sup></button>
+        <button class="reciprocal-btn">1/x</button>
+        <button class="abs-btn">|x|</button>
+        <button class="exponent-btn">exp</button>
+        <button class="modulus-btn">mod</button>
+
+        <button class="btn sqrt-btn"><sup>2</sup>√x</button>
+        <button class="open-paren-btn">(</button>
+        <button class="close-paren-btn">)</button>
+        <button class="factorial-btn">n!</button>
+        <button class="btn divide-btn">÷</button>
+
+        <button class="power-btn">x<sup>y</sup></button>
+        <button class="btn num"><span class="bold-text">7</span></button>
+        <button class="btn num"><span class="bold-text">8</span></button>
+        <button class="btn num"><span class="bold-text">9</span></button>
+        <button class="btn multiply-btn">×</button>
+
+        <button class="ten-power-btn">10<sup>x</sup></button>
+        <button class="btn num"><span class="bold-text">4</span></button>
+        <button class="btn num"><span class="bold-text">5</span></button>
+        <button class="btn num"><span class="bold-text">6</span></button>
+        <button class="btn subtract-btn">-</button>
+
+        <button class="log-btn">log</button>
+        <button class="btn num"><span class="bold-text">1</span></button>
+        <button class="btn num"><span class="bold-text">2</span></button>
+        <button class="btn num"><span class="bold-text">3</span></button>
+        <button class="btn add-btn">+</button>
+
+        <button class="logn-btn">ln</button>
+        <button class="num change-sign-btn">+/-</button>
+        <button class="btn num"><span class="bold-text">0</span></button>
+        <button class="btn num">.</button>
+        <button id="equals">=</button>
+      </div>
+    </div>
+    <!-- Calculator Number and Function Buttons -->
+
+  </div>
+
+  <!-- Link to External JS File -->
+  <script type="module" src="main.js"></script>
+
+
+</body>
+
 </html>
