@@ -1,8 +1,8 @@
 import { saveHistory } from './history.js';
 import { handleMC, handleMR, handleMS, handleMplusAndMinus } from './memory.js';
 
-export const Calculator = (function () {
-    function Calculator(screenId) {
+export const Operation = (function () {
+    function Operation(screenId) {
         this.screen = document.getElementById(screenId);
         if (!this.screen) {
             throw new Error(`Screen element with id "${screenId}" not found.`);
@@ -13,7 +13,7 @@ export const Calculator = (function () {
         this.updateDegButton();
     }
 
-    Calculator.prototype.appendValue = function (value) {
+    Operation.prototype.appendValue = function (value) {
         if (this.screen.textContent === '0') {
             this.screen.textContent = value;
         } else {
@@ -22,7 +22,7 @@ export const Calculator = (function () {
     };
 
     //initialize memory buttons
-    Calculator.prototype.initializeMemoryFunctions = function () {
+    Operation.prototype.initializeMemoryFunctions = function () {
         const screen = this.screen;
 
         // Bind memory functions
@@ -41,43 +41,43 @@ export const Calculator = (function () {
 
 
     // Basic arithmetic operations
-    Calculator.prototype.add = function () {
+    Operation.prototype.add = function () {
         this.appendValue('+');
     };
 
-    Calculator.prototype.subtract = function () {
+    Operation.prototype.subtract = function () {
         this.appendValue('-');
     };
 
-    Calculator.prototype.multiply = function () {
+    Operation.prototype.multiply = function () {
         this.appendValue('×');
     };
 
-    Calculator.prototype.divide = function () {
+    Operation.prototype.divide = function () {
         this.appendValue('÷');
     };
 
-    Calculator.prototype.addOpenParenthesis = function () {
+    Operation.prototype.addOpenParenthesis = function () {
         this.appendValue('(');
     };
 
-    Calculator.prototype.addCloseParenthesis = function () {
+    Operation.prototype.addCloseParenthesis = function () {
         this.appendValue(')');
     };
 
     // Backspace
-    Calculator.prototype.backspace = function () {
+    Operation.prototype.backspace = function () {
         let currentValue = this.screen.textContent;
         this.screen.textContent = currentValue.slice(0, -1) || '0';
     };
 
     // Clear 
-    Calculator.prototype.clearDisplay = function () {
+    Operation.prototype.clearDisplay = function () {
         this.screen.textContent = '0';
     };
 
     // Evaluate result and save to history
-    Calculator.prototype.result = function () {
+    Operation.prototype.result = function () {
         let expression = this.screen.textContent
             .replace('×', '*')
             .replace('÷', '/')
@@ -100,7 +100,7 @@ export const Calculator = (function () {
     };
 
     // Append the value of Pi
-    Calculator.prototype.appendPi = function () {
+    Operation.prototype.appendPi = function () {
         const pi = Math.PI.toFixed(8);
         if (this.screen.textContent === '0') {
             this.appendValue(pi);
@@ -110,15 +110,15 @@ export const Calculator = (function () {
     };
 
     // Math functions
-    Calculator.prototype.modulus = function () {
+    Operation.prototype.modulus = function () {
         this.appendValue('%');
     };
 
-    Calculator.prototype.exponent = function () {
+    Operation.prototype.exponent = function () {
         this.appendValue('^');
     };
 
-    Calculator.prototype.factorial = function () {
+    Operation.prototype.factorial = function () {
         const num = parseInt(this.screen.textContent, 10);
         if (isNaN(num) || num < 0) {
             this.screen.textContent = 'Error';
@@ -131,7 +131,7 @@ export const Calculator = (function () {
         }
     };
 
-    Calculator.prototype.log = function () {
+    Operation.prototype.log = function () {
         const num = parseFloat(this.screen.textContent);
         if (isNaN(num) || num <= 0) {
             this.screen.textContent = 'Error';
@@ -140,7 +140,7 @@ export const Calculator = (function () {
         }
     };
 
-    Calculator.prototype.eulersFormula = function () {
+    Operation.prototype.eulersFormula = function () {
         const x = parseFloat(this.screen.textContent);
         if (isNaN(x)) {
             this.screen.textContent = 'Error';
@@ -149,7 +149,7 @@ export const Calculator = (function () {
         }
     };
 
-    Calculator.prototype.reciprocal = function () {
+    Operation.prototype.reciprocal = function () {
         const x = parseFloat(this.screen.textContent);
         if (isNaN(x) || x === 0) {
             this.screen.textContent = 'Error';
@@ -158,7 +158,7 @@ export const Calculator = (function () {
         }
     };
 
-    Calculator.prototype.ln = function () {
+    Operation.prototype.ln = function () {
         const x = parseFloat(this.screen.textContent);
         if (isNaN(x) || x <= 0) {
             this.screen.textContent = 'Error';
@@ -167,7 +167,7 @@ export const Calculator = (function () {
         }
     };
 
-    Calculator.prototype.absoluteValue = function () {
+    Operation.prototype.absoluteValue = function () {
         const x = parseFloat(this.screen.textContent);
         if (isNaN(x)) {
             this.screen.textContent = 'Error';
@@ -176,7 +176,7 @@ export const Calculator = (function () {
         }
     };
 
-    Calculator.prototype.square = function () {
+    Operation.prototype.square = function () {
         const num = parseFloat(this.screen.textContent);
         if (isNaN(num)) {
             this.screen.textContent = 'Error';
@@ -185,7 +185,7 @@ export const Calculator = (function () {
         }
     };
 
-    Calculator.prototype.sqrt = function () {
+    Operation.prototype.sqrt = function () {
         const x = parseFloat(this.screen.textContent);
         if (isNaN(x) || x < 0) {
             this.screen.textContent = 'Error';
@@ -194,7 +194,7 @@ export const Calculator = (function () {
         }
     };
 
-    Calculator.prototype.powerofXY = function () {
+    Operation.prototype.powerofXY = function () {
         const expression = this.screen.textContent.split('^');
         if (expression.length !== 2) {
             this.screen.textContent = 'Error';
@@ -212,13 +212,13 @@ export const Calculator = (function () {
     };
 
 
-    Calculator.prototype.power = function () {
+    Operation.prototype.power = function () {
         if (!this.screen.textContent.includes('^')) {
             this.appendValue('^');
         }
     };
 
-    Calculator.prototype.tenPowerX = function () {
+    Operation.prototype.tenPowerX = function () {
         const value = parseFloat(this.screen.textContent);
         if (!isNaN(value)) {
             this.screen.textContent = Math.pow(10, value);
@@ -227,27 +227,27 @@ export const Calculator = (function () {
         }
     };
 
-    Calculator.prototype.changeSign = function () {
+    Operation.prototype.changeSign = function () {
         const currentValue = parseFloat(this.screen.textContent);
         if (!isNaN(currentValue)) {
             this.screen.textContent = (currentValue * -1);
         }
     };
 
-    Calculator.prototype.setDegMode = function () {
+    Operation.prototype.setDegMode = function () {
         this.isDegreeMode = !this.isDegreeMode;
         console.log("Degree mode set to:", this.isDegreeMode);
         this.updateDegButton();
     }
 
-    Calculator.prototype.updateDegButton = function () {
+    Operation.prototype.updateDegButton = function () {
         const degButton = document.getElementById("deg-btn");
         if (degButton) {
             degButton.innerText = this.isDegreeMode ? "DEG" : "RAD";
         }
     }
 
-    Calculator.prototype.trigometry = function (func) {
+    Operation.prototype.trigometry = function (func) {
         let inputValue = parseFloat(this.screen.textContent);
         if (isNaN(inputValue)) {
             this.screen.textContent = "Error";
@@ -278,7 +278,7 @@ export const Calculator = (function () {
         console.log(`Trig function: ${func}, Input: ${inputValue}, Mode: ${this.isDegreeMode ? 'Degrees' : 'Radians'}, Result: ${result}`);
     };
 
-    Calculator.prototype.FEMode = function () {
+    Operation.prototype.FEMode = function () {
         let inputStr = this.screen.textContent;
         if (!inputStr || isNaN(Number(inputStr))) return;
 
@@ -296,7 +296,7 @@ export const Calculator = (function () {
         }
     };
 
-    Calculator.prototype.floor = function () {
+    Operation.prototype.floor = function () {
         let value = parseFloat(this.screen.textContent);
 
         if (!isNaN(value)) {
@@ -307,7 +307,7 @@ export const Calculator = (function () {
         }
     }
 
-    Calculator.prototype.ceil = function () {
+    Operation.prototype.ceil = function () {
         let value = parseFloat(this.screen.textContent);
         if (!isNaN(value)) {
             this.screen.textContent = Math.ceil(value);
@@ -316,5 +316,5 @@ export const Calculator = (function () {
         }
     }
 
-    return Calculator;
+    return Operation;
 })();
