@@ -1,76 +1,79 @@
-import { Operation } from './operations.js';
+// Importing  modules
+import { Calculator } from './calculator.js'; // Calculator module
+import { saveHistory, clearHistory, displayHistory, setupHistoryToggle } from './history.js';
+import { handleKeyPress } from './keypressHandler.js';
+import { handleMC, handleMR, handleMplusAndMinus, handleMS } from './memory.js'; // Memory functions
 
-document.addEventListener('DOMContentLoaded', function () {
-    // Initialize the calculator with the display screen
-    const calculator = new Operation('screen');
+// Initialize the calculator
+const calculator = new Calculator('screen');
 
-    // Number buttons
-    document.querySelectorAll('.num').forEach(button => {
-        button.addEventListener('click', () => calculator.appendValue(button.textContent));
+
+// connect to calculator
+calculator.initializeButtons = function (buttonClass) {
+    const numberButtons = document.querySelectorAll(`${buttonClass}.num`);
+    numberButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            this.appendValue(button.textContent.trim());
+        });
     });
 
-    // Basic arithmetic operations
-    document.querySelector('.add-btn').addEventListener('click', () => calculator.add());
-    document.querySelector('.subtract-btn').addEventListener('click', () => calculator.subtract());
-    document.querySelector('.multiply-btn').addEventListener('click', () => calculator.multiply());
-    document.querySelector('.divide-btn').addEventListener('click', () => calculator.divide());
-    document.querySelector('.modulus-btn').addEventListener('click', () => calculator.modulus());
+    // Arithmetic operations
+    document.querySelector('.add-btn').addEventListener('click', () => this.add());
+    document.querySelector('.subtract-btn').addEventListener('click', () => this.subtract());
+    document.querySelector('.multiply-btn').addEventListener('click', () => this.multiply());
+    document.querySelector('.divide-btn').addEventListener('click', () => this.divide());
 
-    // Exponent and power functions
-    document.querySelector('.exponent-btn').addEventListener('click', () => calculator.exponent());
-    document.querySelector('.power-btn').addEventListener('click', () => calculator.power());
-    document.querySelector('.factorial-btn').addEventListener('click', () => calculator.factorial());
+    // Parenthesis
+    document.querySelector('.open-paren-btn').addEventListener('click', () => this.addOpenParenthesis());
+    document.querySelector('.close-paren-btn').addEventListener('click', () => this.addCloseParenthesis());
 
-    // Logarithmic functions
-    document.querySelector('.log-btn').addEventListener('click', () => calculator.log());
-    document.querySelector('.logn-btn').addEventListener('click', () => calculator.ln());
+    // Core functions
+    document.querySelector('#equals').addEventListener('click', () => this.result());
+    document.querySelector('#backspace').addEventListener('click', () => this.backspace());
+    document.querySelector('.clear-btn').addEventListener('click', () => this.clearDisplay());
+    document.querySelector('.pi-btn').addEventListener('click', () => this.appendPi());
 
-    // Reciprocal and absolute value functions
-    document.querySelector('.reciprocal-btn').addEventListener('click', () => calculator.reciprocal());
-    document.querySelector('.abs-btn').addEventListener('click', () => calculator.absoluteValue());
-
-    // Square root and square functions
-    document.querySelector('.sqrt-btn').addEventListener('click', () => calculator.sqrt());
-    document.querySelector('.square-btn').addEventListener('click', () => calculator.square());
-
-    // Power of ten and sign change functions
-    document.querySelector('.ten-power-btn').addEventListener('click', () => calculator.tenPowerX());
-    document.querySelector('.change-sign-btn').addEventListener('click', () => calculator.changeSign());
-
-    // Display control
-    document.querySelector('.clear-btn').addEventListener('click', () => calculator.clearDisplay());
-    document.querySelector('#equals').addEventListener('click', () => calculator.result());
-    document.querySelector('#backspace').addEventListener('click', () => calculator.backspace());
-
-    // Constants
-    document.querySelector('.pi-btn').addEventListener('click', () => calculator.appendPi());
-    document.querySelector('.eulars-btn').addEventListener('click', () => calculator.eulersFormula());
-
-    // Degree/Radian mode toggle
-    document.querySelector('#deg-btn').addEventListener('click', () => calculator.setDegMode());
-
-    // Scientific notation toggle
-    document.querySelector('.fe-btn').addEventListener('click', () => calculator.FEMode());
-
-    // Floor and ceiling functions
-    document.querySelector('.floor-btn').addEventListener('click', () => calculator.floor());
-    document.querySelector('.ceil-btn').addEventListener('click', () => calculator.ceil());
-
-    // Trigonometry functions
-    document.querySelector('.sin-btn').addEventListener('click', () => calculator.trigometry('sin'));
-    document.querySelector('.cos-btn').addEventListener('click', () => calculator.trigometry('cos'));
-    document.querySelector('.tan-btn').addEventListener('click', () => calculator.trigometry('tan'));
-
-    // History functions
-    document.querySelector('#toggleHistoryButton').addEventListener('click', () => {
-        document.querySelector('#historyContainer').classList.toggle('visible');
+    // Advanced math functions
+    document.querySelector('.modulus-btn').addEventListener('click', () => this.modulus());
+    document.querySelector('.exponent-btn').addEventListener('click', () => this.exponent());
+    document.querySelector('.factorial-btn').addEventListener('click', () => this.factorial());
+    document.querySelector('.log-btn').addEventListener('click', () => this.log());
+    document.querySelector('.eulars-btn').addEventListener('click', () => this.eulersFormula());
+    document.querySelector('.logn-btn').addEventListener('click', () => this.ln());
+    document.querySelector('.reciprocal-btn').addEventListener('click', () => this.reciprocal());
+    document.querySelector('.abs-btn').addEventListener('click', () => this.absoluteValue());
+    document.querySelector('.square-btn').addEventListener('click', () => this.square());
+    document.querySelector('.sqrt-btn').addEventListener('click', () => this.sqrt());
+    document.querySelector('.power-btn').addEventListener('click', () => this.power());
+    document.querySelector('.ten-power-btn').addEventListener('click', () => this.tenPowerX());
+    document.querySelector('.change-sign-btn').addEventListener('click', () => this.changeSign());
+    document.getElementById('deg-btn').addEventListener('click', () => {
+        if (typeof calculator !== 'undefined' && calculator.setDegMode) {
+            calculator.setDegMode();
+        }
     });
-    document.querySelector('.clear-history-btn').addEventListener('click', () => calculator.clearHistory());
 
-    // Memory functions
-    document.querySelector('.mc-btn').addEventListener('click', () => calculator.memoryClear());
-    document.querySelector('.mr-btn').addEventListener('click', () => calculator.memoryRecall());
-    document.querySelector('.ms-btn').addEventListener('click', () => calculator.memoryStore());
-    document.querySelector('.mplus-btn').addEventListener('click', () => calculator.memoryAdd());
-    document.querySelector('.mminus-btn').addEventListener('click', () => calculator.memorySubtract());
-});
+    document.querySelector('.fe-btn').addEventListener("click", function () {
+        if (typeof calculator !== "undefined" && calculator.FEMode) {
+            calculator.FEMode();
+        }
+    });
+
+    // Trigonometric functions
+    document.querySelector('.sin-btn').addEventListener('click', () => this.trigometry('sin'));
+    document.querySelector('.cos-btn').addEventListener('click', () => this.trigometry('cos'));
+    document.querySelector('.tan-btn').addEventListener('click', () => this.trigometry('tan'));
+    document.querySelector('.floor-btn').addEventListener('click', () => this.floor());
+    document.querySelector('.ceil-btn').addEventListener('click', () => this.ceil());
+
+    // History buttons
+     document.querySelector('.clear-history-btn').addEventListener('click', () => clearHistory());
+   
+    // Keyboard input
+    document.addEventListener('keydown', handleKeyPress.bind(calculator));
+};
+
+// Initialize buttons for the calculator
+calculator.initializeButtons('.btn');
+setupHistoryToggle();
+calculator.initializeMemoryFunctions(); 
