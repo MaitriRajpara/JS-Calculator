@@ -1,60 +1,41 @@
+// memory-clear-btn
 export function handleMC() {
-    try {
-        localStorage.removeItem('calculationOutput');
-        console.log("Memory Cleared");
-    } catch (error) {
-        console.error("Error clearing memory:", error);
-    }
+    localStorage.removeItem('calculationOutput');
+    console.log("Memory Cleared");
 }
 
-// Handle Memory Recall (MR)
+// memory-recall btn
 export function handleMR(screen) {
-    try {
-        const memoryValue = localStorage.getItem('calculationOutput');
-        console.log(memoryValue);
+    let inputvalue = screen.textContent;
 
-        if (memoryValue) {
-            screen.textContent += memoryValue;
-        } else {
-            console.log("No memory value stored.");
-        }
-    } catch (error) {
-        console.error("Error recalling memory:", error);
+    if (inputvalue === '0' || inputvalue === '') {
+        inputvalue = '';
+    }
+
+    const memoryValue = localStorage.getItem('calculationOutput');
+    if (memoryValue) {
+        screen.textContent = inputvalue + memoryValue;
+    } else {
+        console.log("No memory value stored.");
     }
 }
 
-// Handle Memory Store (MS)
+// memory-store-btn
 export function handleMS(screen, getValueCallback) {
-    try {
-        const valueToStore = getValueCallback(screen);
+    const valueToStore = getValueCallback(screen);
+    if (valueToStore !== null && valueToStore !== undefined) {
         localStorage.setItem('calculationOutput', valueToStore);
         console.log(`Memory Stored: ${valueToStore}`);
-    } catch (error) {
-        console.error("Error storing memory:", error);
+    } else {
+        console.error("Error storing memory: Invalid value.");
     }
 }
 
-// Handle Memory Add (M+) and Subtract (M-)
+// memory-add/minus-btn
 export function handleMplusAndMinus(ref, screen, getValueCallback) {
-    try {
-        const memoryValue = parseFloat(localStorage.getItem('calculationOutput') || "0");
-        const currentValue = parseFloat(getValueCallback(screen));
-        let newValue;
+    const memoryValue = parseFloat(localStorage.getItem('calculationOutput') || "0");
+    const currentValue = parseFloat(getValueCallback(screen));
 
-        if (ref.className.includes('plus')) {
-            newValue = memoryValue + currentValue;
-            console.log(`Memory Addition: ${memoryValue} + ${currentValue}`);
-        } else if (ref.className.includes('minus')) {
-            newValue = memoryValue - currentValue;
-            console.log(`Memory Subtraction: ${memoryValue} - ${currentValue}`);
-        } else {
-            throw new Error("Invalid memory operation.");
-        }
-
-        localStorage.setItem('calculationOutput', newValue.toString());
-        console.log(`New Memory Value: ${newValue}`);
-    } catch (error) {
-        console.error("Error performing memory operation:", error);
+    if (isNaN(memoryValue) || isNaN(currentValue)) {
     }
 }
-
