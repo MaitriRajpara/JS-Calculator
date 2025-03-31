@@ -1,57 +1,106 @@
-export function saveHistory(historyEntry) {
-    let history = JSON.parse(localStorage.getItem('calculationHistory')) || [];
-    history.push(historyEntry);
-    localStorage.setItem('calculationHistory', JSON.stringify(history));
-}
+// Constants for localStorage keys
+const HISTORY_KEY = 'calculationHistory';
 
-export function clearHistory() {
-    localStorage.removeItem('calculationHistory');
+// save-history
+export const saveHistory = (historyEntry) => {
+    let history = [];
+    try {
+        history = JSON.parse(localStorage.getItem(HISTORY_KEY)) || [];
+    } catch (error) {
+        console.error("Error parsing history from localStorage", error);
+    }
+
+    // Only save the operation, not the result
+    const operation = historyEntry.split('=')[0].trim();
+    history.push(operation);
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+};
+
+// clear-history
+export const clearHistory = () => {
+    localStorage.removeItem(HISTORY_KEY);
     const historyList = document.getElementById('historyList');
+    const historyContainer = document.getElementById('historyContainer');
+
     if (historyList) {
         historyList.innerHTML = '';
     }
-}
 
-export function displayHistory() {
-    const history = JSON.parse(localStorage.getItem('calculationHistory')) || [];
-    
-    // Display history
+    if (historyContainer) {
+        // Show "No history available" message after clearing history
+        const noHistoryMessage = document.createElement('p');
+        noHistoryMessage.textContent = 'No history available';
+        historyList.appendChild(noHistoryMessage);
+    }
+};
+
+// display-history
+export const displayHistory = () => {
+    let history = [];
+    try {
+        history = JSON.parse(localStorage.getItem(HISTORY_KEY)) || [];
+    } catch (error) {
+        console.error("Error parsing history from localStorage", error);
+    }
+
     const historyList = document.getElementById('historyList');
     const historyContainer = document.getElementById('historyContainer');
-    const toggleHistoryButton = document.getElementById('history-btn');
+    const toggleHistoryButton = document.getElementById('toggleHistoryButton');
 
     if (!historyList || !historyContainer) {
         console.error("History list or container element not found.");
         return;
     }
 
-    // Visibility of container
+    // Toggle history display
     if (historyContainer.style.display === 'block') {
         historyContainer.style.display = 'none';
-        toggleHistoryButton.innerHTML = '<span><i class= " fa fa-history"</span> ';
+        toggleHistoryButton.innerHTML = '<span><i class="fa fa-history"></i></span>';
     } else {
         historyContainer.style.display = 'block';
-        toggleHistoryButton.innerHTML = '<span><i class= "fa fa-reply"></span>';
-        historyList.innerHTML = '';
+        toggleHistoryButton.innerHTML = '<span><i class="fa fa-reply"></i></span>';
+        historyList.innerHTML = ''; // Clear previous history list
 
-        const ol = document.createElement('ol');
-        history.forEach((item, index) => {
-            const li = document.createElement('li');
-            const div = document.createElement('div');
-            div.classList.add('history-item');
-            div.textContent = `${index + 1}. ${item}`;
-            li.appendChild(div);
-            ol.appendChild(li);
-        });
+        // Check if history is empty
+        if (history.length === 0) {
+            const noHistoryMessage = document.createElement('p');
+            noHistoryMessage.textContent = 'No history available';
+            historyList.appendChild(noHistoryMessage);
+        } else {
+            // Create list of history items
+            const ul = document.createElement('ul');
+            ul.classList.add('history-list');
 
-        historyList.appendChild(ol);
+            history.forEach((item, index) => {
+                const li = document.createElement('li');
+                const div = document.createElement('div');
+                div.classList.add('history-item');
+                div.textContent = item; // Display the operation (e.g., "40-20")
+                div.addEventListener('click', () => {
+                    const screen = document.getElementById('screen');
+                    screen.textContent = item; // Show the operation in the screen
+                });
+                li.appendChild(div);
+                ul.appendChild(li);
+            });
+
+            historyList.appendChild(ul);
+        }
+
+        // Clear history button
+        const clearHistoryBtn = document.createElement('button');
+        clearHistoryBtn.classList.add('clear-history-btn');
+        clearHistoryBtn.innerHTML = 'Clear History';
+        clearHistoryBtn.addEventListener('click', clearHistory);
+        historyList.appendChild(clearHistoryBtn);
     }
-}
+};
 
-// Show/hide
-export function setupHistoryToggle() {
-    const toggleHistoryButton = document.getElementById('history-btn');
+// toggle-history-btn
+export const setupHistoryToggle = () => {
+    const toggleHistoryButton = document.getElementById('toggleHistoryButton');
+    const historyContainer = document.getElementById('historyContainer');
     if (toggleHistoryButton) {
         toggleHistoryButton.addEventListener('click', displayHistory);
     }
-}
+};
