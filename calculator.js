@@ -162,7 +162,7 @@ export class Calculator {
         expression = expression.replace('×', '*')
             .replace('÷', '/')
             .replace('%', '%')
-            .replace('/π/g', 'Math.PI')
+            .replace(/π/g, 'Math.PI')
             .replace('10^', '10**')
             .replace('^', '**')
             .replace('log', 'Math.log10')
